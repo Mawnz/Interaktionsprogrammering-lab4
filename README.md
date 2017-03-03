@@ -1,4 +1,4 @@
-Interaction Programing - Lab assignment - HTML
+Interaction Programming - Lab assignment - HTML
 =================================================
 
-This project contains the startup code for HTML version of the Interaction Programing course lab assignment. For more details on how to complete the assignment follow the instructions on the [course website](https://www.kth.se/social/course/DH2641).
+A dinnerplanner made using Javscript, HTML, CSS, Bootstrap, JQuery, REST APIs and AJAX to make a dynamic and interactive application for planning a dinner. This was a lab in the course Interaction Programming and the Dynamic Web at KTH.

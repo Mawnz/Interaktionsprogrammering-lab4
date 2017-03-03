@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Made by Måns Åberg & Lucas Rudqwist -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Dinner planner</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<!--Diverse styling with own css-->
+	<link rel="stylesheet" href="homelette.css">
+
+  </head>
+  <body>
+
+	<div class="container-fluid bgimg" id = "container">
+		<div class="row headerColor">
+			<!--View 0 + controller: DONE-->
+			<div id="homeletteView" class = "col-xs-12 fullBorder">
+				<div class = "col-xs-12">
+					<h1 id = "homelette" ><strong>HOMELETTE</strong>
+					<small><em>From the best chefs in the world to your kitchen</em></small></h1>
+				</div>
+			</div>
+			<!--END-->
+		</div>
+
+<!--TODO: assign variable to update functions so everything does not update all the time, only when needed-->
+
+		<!--Where all other views are placed-->
+		<div id = "mainRow" class = "row-fluid maxViewport pre-scrollable">
+			<!--View 1 + controller:DONE-->
+			<div id="homeView" class = "col-xs-12 maxView">
+				<div class = "col-lg-6 col-md-8 col-sm-10 col-xs-12 bg-success homediv">
+					<div class = "row">
+						<div class = "col-xs-12 bottomBorder">
+							<h2>A home dinner service</h2>
+						</div>
+					</div>
+					<div class = "row">
+						<div class = "col-xs-12">
+							<h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dolor
+							eisumod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+							veniam, quis nostrud exercitation ullamco laboris nisi ut
+							aliquip ex ea commodo consequat.</h5>
+							<br>
+							<br>
+						</div>
+					</div>
+					<div class = "row">
+						<div class = "col-xs-12">
+							<h5>start quickly</h5>
+							<button id = "createDinner" class = "btn btn-warning" type = "submit">
+								Create new dinner
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--END-->
+
+			<!-- View 2 + controller:DONE-->
+			<div id="dinnerView" class = "col-xs-12 col-sm-4 col-md-3">
+				<div class = "row">
+					<div class = "col-xs-3 col-sm-6 ddRows">
+						<h4>My Dinner<br><br>
+						<small><strong>People <span id = "numberOfGuests"></span></strong></small></h4>
+					</div>
+					<div class = "col-xs-9 col-sm-6">
+						<br><br>
+						<button id="minusGuest" class="btn"><span class="glyphicon glyphicon-minus"></span></button>
+						<button id="plusGuest" class="btn"><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+				</div>
+				<div class = "row gray fullBorder">
+					<div class = "col-xs-8 ddRows">
+						Dish name
+					</div>
+					<div class = "col-xs-3">
+						Cost
+					</div>
+				</div>
+				<!--This will be populated with dishes as you choose them..-->
+				<div id = "menu">
+					<div id = "allMenu">
+
+					</div>
+					<!--Needs to be at bottom, always...-->
+					<div id="pendingRow">
+						<div class="row dishPadding">
+							<div class = "col-xs-8" >
+								<span id="dish">Pending</span>
+							</div>
+							<div class = "col-xs-3">
+								<span cost = "0" id="cost" >0.00</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--This displays the total cost of the menu-->
+				<div class="row topBorder  dishPadding">
+					<div class="col-xs-8 textRight">SEK </div>
+					<div class="col-xs-3"><span id="menuCost">0.00</span></div>
+				</div>
+				<!--This is the button that confirms dinner, duh-->
+				<div class="row dishPadding">
+					<div class="col-xs-2"> </div>
+					<div class="col-xs-8">
+						<button class="btn btn-default dinnerBtn" id = "confirmDinnerButton" disabled>
+							Confirm Dinner
+						</button>
+					</div>
+				</div>
+			</div>
+			<!--END-->
+
+			<!-- View 3 + controller:DONE-->
+			<div id="dishView" class = "col-xs-12 col-sm-8 col-md-9 fullBorder maxHeight">
+				<div class = "row searchField fullBorder">
+					<div class="row">
+						<div class="col-xs-1" ></div>
+						<div class="col-xs-10 bottomBorder">
+							<h3>SELECT DISH</h3>
+						</div>
+						<div class = "col-xs-1"></div>
+					</div>
+					<div class = "row dishPadding">
+						<div class = "col-xs-1"></div>
+						<div class = "col-xs-7 col-sm-7 col-md-5 col-lg-4">
+							<input class = "filterField" id = "searchBar" type="text" name="foodSearch" value = ""/>
+							<button id = "searchForFood" type = "submit" class = "btn btn-default">
+								search
+							</button>
+						</div>
+						<div class = "col-xs-3 col-sm-3 typeBox">
+							<select id= "listTypes" >
+								<option id = "optAny" value="any">Any</option>
+								<option id = "optMain" value="maindish">Main</option>
+								<option id = "optStarter" value="starter">Starter</option>
+								<option id = "optDessert" value="dessert">Dessert</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!--TODO THIS-->
+				<!--This is where all the dishes will be placed-->
+				<div id = "dishRows" class = "row">
+
+				</div>
+        <div id="loading">
+          <p><img src="images/loading.gif" /> Please Wait</p>
+        </div>
+				<!--So you can scroll all the way-->
+				<div class = "row"><br><br><br><br><br><br></div>
+			</div>
+			<!--END-->
+
+			<!--View 4 + controller:DONE-->
+			<div id="confirmView" class = "col-xs-12 col-sm-8 col-md-9 fullBorder maxHeight">
+				<div class = "row">
+					<div class = "col-xs-1"></div>
+
+					<div class = "col-xs-12 col-md-5">
+						<div  class = "row">
+							<h2 id = "confirmFoodTitle"> Lasagne </h2>
+						</div>
+						<div class = "row">
+							<figure class = "figure">
+								<img id = "confirmFoodImage" class = "figure-img img-desc" src = "images/meatballs.jpg"/>
+								<figcaption id = "confirmFoodText" class = "descript">
+									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dolor
+									eisumod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+									veniam, quis nostrud exercitation ullamco laboris nisi ut
+									aliquip ex ea commodo consequat.
+								</figcaption>
+							</figure>
+						</div>
+						<div class = "row">
+							<button id = "backpls" class = "btn btn-default" type = "submit">
+								back to Select Dish
+							</button>
+						</div>
+					</div>
+					<div  class = "col-xs-12 col-md-6 bg-warning fullBorder">
+						<!--Here the recipe will be displaye-->
+						<div class = "row">
+							<div class = "col-xs-1"> </div>
+							<div class = "col-xs-10">
+								<h4>Ingredients for <span id = "nrog"></span> people </h4>
+							</div>
+							<div class = "col-xs-1"> </div>
+						</div>
+						<div id="recipe" class = "row">
+							<div class = "col-xs-1"></div>
+							<div class = "col-xs-2">
+								10 tbsp
+							</div>
+							<div class = "col-xs-5">
+								Fresh pck lasagne sheets
+							</div>
+							<div class = "col-xs-2">
+								SEK
+							</div>
+							<div class = "col-xs-1">
+								00.00
+							</div>
+						</div>
+						<div class = "row">
+							<div class = "col-xs-1"></div>
+							<div class = "col-xs-7 topBorder">
+							<button id="confirmDishButton" class="btn btn-default">
+								Confirm Dish
+							</button>
+							</div>
+							<div class = "col-xs-2 topBorder">
+								<h5>SEK</h5>
+							</div>
+							<div id = "totCost" class = "col-xs-1 topBorder">
+								<h5>00.00</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class = "row">
+					<div class = "col-xs-1"> </div>
+					<div class = "col-xs-12 col-md-6">
+						<h2>Preperation</h2>
+					</div>
+					<div id = "foodDesc" class = "col-xs-12 col-md-6">
+						STUFF
+					</div>
+					<div class  = "row"><br><br><br><br><br><br>
+					<br><br><br><br><br><br><br><br><br><br><br>
+					<br><br><br><br></div>
+				</div>
+			</div>
+			<!--END-->
+
+			<!-- View 5 + controller:DONE-->
+			<div id = "overPrepareView"  class = "col-xs-12 searchField fullBorder centerContent">
+				<div class="col-xs-12 col-sm-10">
+					<div class = "col-xs-12 col-sm-8 col-md-9">
+						<h2><strong>My Dinner: <span id="nrOfGuests">4 </span> people </strong></h2>
+					</div>
+					<div class = "col-xs-12 col-sm-1 col-md-3 centerBtn" align="center">
+						<button id="goBackEditDinner" class="btn btn-default " style="width:200px;margin-top:7%">
+							Go back and edit dinner
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!--View 6 + controller:DONE-->
+			<div id="overviewView" class ="col-xs-12">
+				<div  class = "row stretch OVPadding">
+					<div class = "col-md-2"> </div>
+					<div id="fillMe" class = "col-xs-12 col-md-8">
+
+					</div>
+
+					<div class = "col-xs-12 col-md-2 priceAll stretch paddingPhone">
+						<div class = "col-xs-12 col-sm-12 bottomBig pricePhone">
+							<h4 class = "bottomBig">Total:<br><span id = "totalMenuPrice" class ="red" >00.00</span></h4>
+						</div>
+					</div>
+				</div>
+				<div class = "row">
+					<div class = "col-xs-1"></div>
+					<div class = "col-xs-10 topBorder OVPadding" align="center">
+						<input class="btn btn-default"  type="submit" id="prepareviewer" value="Print Full Recipe">
+					</div>
+					<div class = "col-xs-1"></div>
+					<div class = "row">
+						<br><br><br><br><br><br><br><br><br><br><br><br>
+					</div>
+				</div>
+			</div>
+			<!--END-->
+
+			<!--View 7 + controller:DONE-->
+			<div id="preparationView" class = "col-xs-12">
+				<div class ="row  stretch bottomPadding">
+					<div class = "col-xs-12 col-sm-6 col-md-4">
+						<br>
+						<image class = "img-responsive" src = "images/meatballs.jpg">
+					</div>
+					<div class = "col-xs-12 col-sm-6 col-md-4">
+							<h2> Lasagne </h2><br>
+								<h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dolor
+								eisumod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+								veniam, quis nostrud exercitation ullamco laboris nisi ut
+								aliquip ex ea commodo consequat.</h5>
+					</div>
+					<div class = "col-xs-12 col-sm-12 col-md-4">
+						<h3> Preperation </h3><br>
+							<h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dolor
+							eisumod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+							veniam, quis nostrud exercitation ullamco laboris nisi ut
+							aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dolor
+							eisumod tempor incididunt ut labore et dolore magna aliqua.</h5>
+					</div>
+				</div>
+			</div>
+			<!--END-->
+		</div>
+	</div>
+	<!--END-->
+ </div>
+
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Bootstrap JavaScript, needed if you want for instance tabs, models, popovers etc. -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+	<!-- The application JavaScript code -->
+	<script src="js/app.js"></script>
+	<script src="js/model/dinnerModel.js"></script>
+	<script src="js/view/homeletteView.js"></script>
+	<script src="js/view/homeView.js"></script>
+	<script src="js/view/dinnerView.js"></script>
+	<script src="js/view/dishView.js"></script>
+	<script src="js/view/confirmView.js"></script>
+	<script src="js/view/overviewView.js"></script>
+	<script src="js/view/preparationView.js"></script>
+	<script src="js/view/overPrepareView.js"></script>
+
+	<!--Controllers-->
+	<script src="js/view/homeViewController.js"></script>
+	<script src="js/view/dinnerViewController.js"></script>
+	<script src="js/view/dishViewController.js"></script>
+	<script src="js/view/confirmViewController.js"></script>
+	<script src="js/view/overviewViewController.js"></script>
+	<script src="js/view/preparationViewController.js"></script>
+	<script src="js/view/overPrepareViewController.js"></script>
+	<script src="js/view/homeletteViewController.js"></script>
+
+	<!-- other -->
+	<script src = "js/view/waiting.js"></script>
+
+	<script src="js/view/state-controller.js"></script>
+
+  </body>
+</html>
